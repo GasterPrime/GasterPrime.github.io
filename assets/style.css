@@ -1,0 +1,121 @@
+/* Layout: one reading column; a spec strip under the hero, then systems, engineering, services, terms. */
+:root {
+  --bg: #f2f5f4;
+  --surface: #ffffff;
+  --ink: #102230;
+  --muted: #536472;
+  --line: #d5dfdd;
+  --accent: #0b7a71;
+  --accent-ink: #ffffff;
+  --mark: #e0a21b;
+  --mark-soft: #f7e7bf;
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c151c; --surface: #13202a; --ink: #e5edf1; --muted: #93a6b2; --line: #24343f;
+    --accent: #3cc2b5; --accent-ink: #062a27; --mark: #f0b63a; --mark-soft: #3a2f14;
+    color-scheme: dark;
+  }
+}
+/* Thai: Archivo and Plex Sans have no Thai glyphs, so Thai text uses Plex Sans Thai */
+:root:lang(th) {
+  --font-display: "IBM Plex Sans Thai", "Archivo", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+:lang(th) body { line-height: 1.75; }
+.wrap { max-width: 980px; margin: 0 auto; }
+section { padding-block: 56px; border-top: 1px solid var(--line); display: grid; gap: 24px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.1; }
+:lang(th) h1, :lang(th) h2, :lang(th) h3 { line-height: 1.35; }
+h2 { font-size: clamp(26px, 4vw, 34px); font-weight: 800; font-variation-settings: "wdth" 112; }
+h3 { font-size: 19px; font-weight: 700; font-variation-settings: "wdth" 104; }
+p { margin: 0; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+:lang(th) .eyebrow { font-family: var(--font-body); letter-spacing: .02em; font-size: 13px; font-weight: 600; }
+.lede { color: var(--muted); max-width: 62ch; }
+
+/* Top bar with language switch */
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-block: 20px 0; }
+.handle { font-family: var(--font-mono); font-size: 14px; color: var(--accent); font-weight: 600; }
+.lang { display: flex; gap: 4px; font-size: 14px; }
+.lang a, .lang span { padding: 4px 10px; border-radius: 999px; text-decoration: none; color: var(--muted); border: 1px solid transparent; }
+.lang span { color: var(--ink); border-color: var(--line); background: var(--surface); font-weight: 600; }
+.lang a:hover { color: var(--ink); }
+
+/* Hero */
+header { padding-block: 40px 48px; display: grid; gap: 22px; }
+h1 { font-size: clamp(36px, 7vw, 68px); font-weight: 900; font-variation-settings: "wdth" 118; letter-spacing: -.01em; max-width: 16ch; }
+:lang(th) h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 700; letter-spacing: 0; max-width: 20ch; }
+h1 em { font-style: normal; background: linear-gradient(transparent 62%, var(--mark-soft) 62%); }
+header .lede { font-size: 18px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 6px; font-weight: 600; text-decoration: none; background: var(--accent); color: var(--accent-ink); }
+.btn:focus-visible, a:focus-visible { outline: 3px solid var(--mark); outline-offset: 2px; }
+.note { font-size: 14px; color: var(--muted); }
+
+/* Spec strip: the real stack, as a server owner would read it */
+.spec { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); margin: 0; }
+.spec div { padding: 14px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; display: grid; gap: 2px; min-width: 0; }
+.spec dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+:lang(th) .spec dt { font-family: var(--font-body); letter-spacing: 0; font-size: 12px; }
+.spec dd { margin: 0; font-family: var(--font-mono); font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums; }
+
+/* Flagship systems */
+.systems { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.sys { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.figure { font-family: "Archivo", "Arial Narrow", sans-serif; font-weight: 900; font-variation-settings: "wdth" 125; font-size: 40px; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+.figure small { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-left: 6px; }
+:lang(th) .figure small { font-family: var(--font-body); letter-spacing: 0; font-size: 13px; }
+.sys p { color: var(--muted); font-size: 15px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.chips li { border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-size: 14px; background: var(--surface); }
+
+/* Engineering */
+.eng { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; }
+.eng > div { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.eng ul { margin: 0; padding-left: 18px; color: var(--muted); display: grid; gap: 6px; font-size: 15px; }
+code { font-family: var(--font-mono); font-size: .9em; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
+
+/* Services */
+.launch { display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; background: var(--mark-soft); border-radius: 6px; padding: 10px 14px; font-size: 15px; justify-self: start; }
+.launch b { font-family: var(--font-mono); color: var(--ink); }
+:lang(th) .launch b { font-family: var(--font-body); }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; min-width: 560px; }
+th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+:lang(th) th { font-family: var(--font-body); letter-spacing: 0; font-size: 13px; }
+td.price { font-family: var(--font-mono); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.price s { color: var(--muted); font-weight: 400; margin-left: 6px; }
+td small { display: block; color: var(--muted); font-size: 14px; }
+
+/* Terms: a real order of steps */
+.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; counter-reset: step; }
+.steps li { counter-increment: step; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.steps li::before { content: "Step " counter(step); font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+:lang(th) .steps li::before { content: "ขั้นที่ " counter(step); font-family: var(--font-body); letter-spacing: 0; font-size: 13px; }
+.steps p { color: var(--muted); font-size: 15px; }
+
+footer { padding-block: 56px 72px; border-top: 1px solid var(--line); display: grid; gap: 16px; }
+footer h2 { max-width: 20ch; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn { transition: transform .15s ease; }
+  .btn:hover { transform: translateY(-1px); }
+}
